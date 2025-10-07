@@ -5,9 +5,11 @@ sys.path.append('../utils')
 import utils
 
 # Load environment variables from .env file or Secret Manager
-_ = load_dotenv("../.env")
+_ = load_dotenv("./.env")
 aws_region = os.getenv("AWS_REGION")
-tavily_ai_api_key = utils.get_tavily_api("TAVILY_API_KEY", aws_region)
+tavily_ai_api_key = os.getenv("TAVILY_API_KEY")
+if tavily_ai_api_key is None:
+    raise ValueError("TAVILY_API_KEY not found. Please set it in your .env file.")
 
 import warnings
 warnings.filterwarnings("ignore", message=".*TqdmWarning.*")
